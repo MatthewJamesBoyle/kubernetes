@@ -1,0 +1,84 @@
+tasks:
+    build:
+        name: Build Kubernetes
+        description: Build all Kubernetes binaries
+        command: |
+            make all
+        triggeredBy:
+            - manual
+
+    build-kubectl:
+        name: Build kubectl
+        description: Build kubectl binary only
+        command: |
+            make all WHAT=cmd/kubectl
+        triggeredBy:
+            - manual
+
+    test:
+        name: Run Unit Tests
+        description: Run unit tests for the project
+        command: |
+            make test
+        triggeredBy:
+            - manual
+
+    test-integration:
+        name: Run Integration Tests
+        description: Run integration tests
+        command: |
+            make test-integration
+        triggeredBy:
+            - manual
+
+    verify:
+        name: Run Verification
+        description: Run all presubmission verifications
+        command: |
+            make verify
+        triggeredBy:
+            - manual
+
+    quick-verify:
+        name: Quick Verification
+        description: Run fast presubmission verifications
+        command: |
+            make quick-verify
+        triggeredBy:
+            - manual
+
+    update:
+        name: Run Update Scripts
+        description: Run all update scripts
+        command: |
+            make update
+        triggeredBy:
+            - manual
+
+    install-etcd:
+        name: Install etcd
+        description: Install etcd for local development
+        command: |
+            hack/install-etcd.sh
+            echo "Add to PATH: export PATH=\"\${PATH}:\${PWD}/third_party/etcd\""
+        triggeredBy:
+            - postDevcontainerStart
+
+    gofmt:
+        name: Format Go Code
+        description: Format Go source files
+        command: |
+            hack/update-gofmt.sh
+        triggeredBy:
+            - manual
+
+    snyk-test:
+        name: Snyk Security Test
+        description: Run Snyk security vulnerability scan
+        command: |
+            snyk test --all-projects
+        triggeredBy:
+            - manual
+
+services: {}
+

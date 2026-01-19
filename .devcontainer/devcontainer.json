@@ -1,0 +1,44 @@
+{
+	"name": "Kubernetes Development",
+	"build": {
+		"context": ".",
+		"dockerfile": "Dockerfile"
+	},
+	"features": {
+		"ghcr.io/devcontainers/features/go:1": {
+			"version": "1.25.6"
+		},
+		"ghcr.io/devcontainers/features/docker-in-docker:2": {
+			"moby": false
+		}
+	},
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"golang.go",
+				"redhat.vscode-yaml",
+				"ms-vscode.makefile-tools",
+				"timonwong.shellcheck",
+				"editorconfig.editorconfig",
+				"ms-kubernetes-tools.vscode-kubernetes-tools"
+			],
+			"settings": {
+				"go.useLanguageServer": true,
+				"go.lintTool": "golangci-lint",
+				"go.lintOnSave": "package",
+				"editor.formatOnSave": true,
+				"[go]": {
+					"editor.defaultFormatter": "golang.go"
+				}
+			}
+		}
+	},
+	"forwardPorts": [
+		6443,
+		8080,
+		10250,
+		10259,
+		10257
+	],
+	"postCreateCommand": "hack/install-etcd.sh && export PATH=\"${PATH}:${PWD}/third_party/etcd\""
+}
